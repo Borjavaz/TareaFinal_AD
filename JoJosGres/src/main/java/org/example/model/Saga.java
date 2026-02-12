@@ -2,9 +2,7 @@ package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
 import java.util.List;
-
 
 @Entity
 @Table(name = "sagas")
@@ -17,63 +15,30 @@ public class Saga {
 
     @Column(name = "titulo")
     private String titulo;
+
     @Column(name = "parte")
     private int parte;
+
     @Column(name = "anoinicio")
     private int anoinicio;
+
     @Column(name = "ambientacion")
     private String ambientacion;
-    //REMOVE,DETACH,MERGE,REFRESH
-    //ALL,PERSIST
-    @OneToMany(mappedBy = "saga",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "saga", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Personaxe> personaxes;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public int getParte() {
-        return parte;
-    }
-
-    public void setParte(int parte) {
-        this.parte = parte;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo= titulo;
-    }
-
-    public String getAmbientacion() {
-        return ambientacion;
-    }
-
-    public void setAmbientacion(String ambientacion) {
-        this.ambientacion = ambientacion;
-    }
-
-    public int getAnoinicio() {
-        return anoinicio;
-    }
-
-    public void setAnoinicio(int anoinicio) {
-        this.anoinicio = anoinicio;
-    }
-
-    public List<Personaxe> getPersonaxes() {
-        return personaxes;
-    }
-
-    public void setPersonaxes(List<Personaxe> personaxes) {
-        this.personaxes = personaxes;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public int getParte() { return parte; }
+    public void setParte(int parte) { this.parte = parte; }
+    public int getAnoinicio() { return anoinicio; }
+    public void setAnoinicio(int anoinicio) { this.anoinicio = anoinicio; }
+    public String getAmbientacion() { return ambientacion; }
+    public void setAmbientacion(String ambientacion) { this.ambientacion = ambientacion; }
+    public List<Personaxe> getPersonaxes() { return personaxes; }
+    public void setPersonaxes(List<Personaxe> personaxes) { this.personaxes = personaxes; }
 }

@@ -3,7 +3,6 @@ package org.example.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "personaxes")
 public class Personaxe {
@@ -12,8 +11,10 @@ public class Personaxe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idpersonaxe")
     private Long id;
+
     @Column(name = "nome")
     private String nome;
+
     @Column(name = "stand")
     private String stand;
 
@@ -22,35 +23,12 @@ public class Personaxe {
     @JsonBackReference
     private Saga saga;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getStand() {
-        return stand;
-    }
-
-    public void setStand(String stand) {
-        this.stand = stand;
-    }
-
-    public Saga getSaga() {
-        return saga;
-    }
-
-    public void setSaga(Saga saga) {
-        this.saga = saga;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+    public String getStand() { return stand; }
+    public void setStand(String stand) { this.stand = stand; }
+    public Saga getSaga() { return saga; }
+    public void setSaga(Saga saga) { this.saga = saga; }
 }

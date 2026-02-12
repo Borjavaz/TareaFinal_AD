@@ -21,7 +21,6 @@ public class Saga {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -29,7 +28,6 @@ public class Saga {
     public String getTitulo() {
         return titulo;
     }
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -37,7 +35,6 @@ public class Saga {
     public int getParte() {
         return parte;
     }
-
     public void setParte(int parte) {
         this.parte = parte;
     }
@@ -45,7 +42,6 @@ public class Saga {
     public int getAnoinicio() {
         return anoinicio;
     }
-
     public void setAnoinicio(int anoinicio) {
         this.anoinicio = anoinicio;
     }
@@ -53,7 +49,6 @@ public class Saga {
     public String getAmbientacion() {
         return ambientacion;
     }
-
     public void setAmbientacion(String ambientacion) {
         this.ambientacion = ambientacion;
     }
@@ -61,7 +56,6 @@ public class Saga {
     public List<Personaxe> getPersonaxes() {
         return personaxes;
     }
-
     public void setPersonaxes(List<Personaxe> personaxes) {
         this.personaxes = personaxes;
     }

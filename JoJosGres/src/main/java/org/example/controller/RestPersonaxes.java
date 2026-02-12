@@ -7,9 +7,7 @@ import org.example.service.PersonaxeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 
 @RestController
 @RequestMapping(RestPersonaxes.MAPPING)
@@ -18,42 +16,36 @@ public class RestPersonaxes {
     public static final String MAPPING = "/postgres/personaxes";
 
     @Autowired
-    private SagaService sagaService;
+    private SagaService sagaSvc;
     @Autowired
-    private PersonaxeService personaxeService;
-
+    private PersonaxeService persSvc;
 
     @GetMapping
     public List<Personaxe> getAll() {
-        return personaxeService.findAll();
+        return persSvc.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Personaxe> getById(@PathVariable Long id) {
-        return personaxeService.findById(id)
+        return persSvc.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Personaxe> create(@RequestBody Personaxe personaxe) {
-        if (personaxe.getSaga() != null && personaxe.getSaga().getId() != null) {
-            Saga eq = sagaService.findById(personaxe.getSaga().getId())
-                    .orElse(null);
-            if (eq == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            personaxe.setSaga(eq);
+    public ResponseEntity<Personaxe> create(@RequestBody Personaxe p) {
+        if (p.getSaga() != null && p.getSaga().getId() != null) {
+            Saga eq = sagaSvc.findById(p.getSaga().getId()).orElse(null);
+            if (eq == null) return ResponseEntity.badRequest().build();
+            p.setSaga(eq);
         }
-        Personaxe gardado = personaxeService.save(personaxe);
-        return ResponseEntity.ok(gardado);
+        return ResponseEntity.ok(persSvc.save(p));
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!personaxeService.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        personaxeService.deleteById(id);
+        if (!persSvc.existsById(id)) return ResponseEntity.notFound().build();
+        persSvc.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -4,52 +4,31 @@ import com.google.gson.Gson;
 import org.example.model.Saga;
 import org.example.repository.SagaRepository;
 import org.springframework.stereotype.Service;
-
 import java.io.FileWriter;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class SagaService {
+    private SagaRepository repo;
 
-    private SagaRepository sagaRepository;
-
-    public SagaService(SagaRepository sagaRepository) {
-        this.sagaRepository = sagaRepository;
+    public SagaService(SagaRepository repo) {
+        this.repo = repo;
     }
 
-    public List<Saga> findAll() {
-        return sagaRepository.findAll();
-    }
+    public List<Saga> findAll() { return repo.findAll(); }
+    public Optional<Saga> findById(Long id) { return repo.findById(id); }
+    public Saga save(Saga s) { return repo.save(s); }
+    public boolean existsById(Long id) { return repo.existsById(id); }
+    public List<Saga> sagaByTitulo(String t) { return repo.findByTitulo(t); }
+    public void deleteById(Long id) { repo.deleteById(id); }
 
-    public Optional<Saga> findById(Long id) {
-        return sagaRepository.findById(id);
-    }
-
-    public Saga save(Saga saga) {
-        return sagaRepository.save(saga);
-    }
-
-    public boolean existsById(Long id) {
-        return sagaRepository.existsById(id);
-    }
-
-    public List<Saga> sagaByTitulo(String titulo){
-        return sagaRepository.findByTitulo(titulo);
-    }
-
-    public void deleteById(Long id) {
-        sagaRepository.deleteById(id);
-    }
-
-    public void exportarJson(){
+    public void exportarJson() {
         Gson gson = new Gson();
-        List<Saga> sagas = findAll();
-        try (FileWriter escritor = new FileWriter("src/main/java/org/example/Json/Sagas.json")){
-            String json = gson.toJson(sagas);
-            escritor.write(json);
+        try (FileWriter fw = new FileWriter("src/main/java/org/example/Json/Sagas.json")) {
+            fw.write(gson.toJson(findAll()));
         } catch (Exception e) {
-            System.out.println("Error al exportar. "+e.getMessage());
+            System.out.println("erro export: " + e.getMessage());
         }
     }
 }

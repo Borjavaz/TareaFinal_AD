@@ -1,16 +1,11 @@
 package org.example.controller;
 
-import org.example.model.Personaxe;
-import org.example.model.Saga;
 import org.example.model.Saga;
 import org.example.service.PersonaxeService;
 import org.example.service.SagaService;
-import org.example.service.SagaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,43 +14,38 @@ public class RestSagas {
     public static final String MAPPING = "/postgres/sagas";
 
     @Autowired
-    private PersonaxeService personaxeService;
+    private PersonaxeService persSvc;
     @Autowired
-    private SagaService sagaService;
-
+    private SagaService sagaSvc;
 
     @GetMapping
     public List<Saga> getAll() {
-        return sagaService.findAll();
+        return sagaSvc.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Saga> getById(@PathVariable Long id) {
-        return sagaService.findById(id)
+        return sagaSvc.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/titulo/{titulo}")
     public ResponseEntity<List<Saga>> getByTitulo(@PathVariable String titulo) {
-        List<Saga> sagas = sagaService.sagaByTitulo(titulo);
-        if (sagas == null || sagas.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(sagas);
+        List<Saga> lista = sagaSvc.sagaByTitulo(titulo);
+        if (lista == null || lista.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(lista);
     }
 
     @PostMapping
-    public ResponseEntity<Saga> create(@RequestBody Saga saga) {
-        Saga gardado = sagaService.save(saga);
-        return ResponseEntity.ok(gardado);
+    public ResponseEntity<Saga> create(@RequestBody Saga s) {
+        return ResponseEntity.ok(sagaSvc.save(s));
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!sagaService.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        sagaService.deleteById(id);
+        if (!sagaSvc.existsById(id)) return ResponseEntity.notFound().build();
+        sagaSvc.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
